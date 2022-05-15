@@ -1,0 +1,17 @@
+{
+  "name": "fishingbot",
+  "version": "1.0.0",
+  "description": "My discord bot, labeled fish bot. Written in Javascript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ascii-table": "^0.0.9",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0"
+  },
+  "keywords": []
+}
