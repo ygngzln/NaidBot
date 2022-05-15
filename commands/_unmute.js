@@ -1,6 +1,6 @@
 module.exports = {
-    name: '_kick',
-    description: '!_kick [user] [reason]',
+    name: '_unmute',
+    description: '!_unmute [user]',
     run: async(client, message, args) => {
         var owner = message.member.roles.cache.some(role => role.name === "Owner")
         var admin = message.member.roles.cache.some(role => role.name === "Admin")
@@ -10,31 +10,29 @@ module.exports = {
         }
 
         if(args.length < 1){
-            message.channel.send("Invalid kick arguments. Need [user] and (optional) [reason]")
+            message.channel.send("Invalid unmute arguments. Need [user].")
             return;
         }
 
         const member = message.mentions.users.first() || undefined;
 
-        if(member && message.member.id === member.id){
-            message.channel.send("Don't kick yourself :(")
-            return;
-        }
-
         if(member){
             const user = message.guild.members.cache.get(member.id)
             var owner2 = user.roles.cache.some(role => role.name === "Owner")
             var admin2 = user.roles.cache.some(role => role.name === "Admin")
-            if(owner2 || admin2 || member.bot){
+            var muted = user.roles.cache.some(role => role.name === "Muted")
+            if(owner2 || admin2 || member.bot || !muted){
                 if(!owner){
-                    message.channel.send("You cannot kick this user.")
+                    message.channel.send("You cannot unmute this user.")
                     return;
                 }
             }
 
-            user.kick()
-            if(!args[1]){ args.push("none") }
-            message.channel.send(`${user.user.username} was kicked for ${args[1]}.`)
+            var newrole = message.guild.roles.cache.find(role => role.name === "Muted")
+            user.roles.remove(newrole)
+            newrole = message.guild.roles.cache.find(role => role.name === "Member")
+            user.roles.add(newrole)
+            message.channel.send(`${user.user.username} was unmuted.`)
         }
         return;
     }

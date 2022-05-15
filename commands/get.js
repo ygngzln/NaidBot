@@ -1,6 +1,6 @@
 module.exports = {
     name: 'get',
-    description: 'Get random stuff',
+    description: 'Get random stuff, did not spend effort on this xD',
     run: async(message, args) => {
         var name = Math.round(Math.random()*8)
         var units = Math.round(Math.random()*999)+1
